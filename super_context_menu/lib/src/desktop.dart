@@ -255,7 +255,9 @@ class DesktopContextMenuWidget extends StatelessWidget {
             });
         final res = await menuContext.showContextMenu(request);
         onHideMenu.value = res;
-        onMenuClosed?.call();
+        if (res.itemSelected == false) {
+          onMenuClosed?.call();
+        }
       } else {
         onMenuResolved(false);
       }
