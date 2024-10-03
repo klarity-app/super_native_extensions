@@ -62,6 +62,7 @@ class ContextMenuWidget extends StatelessWidget {
     MobileMenuWidgetBuilder? mobileMenuWidgetBuilder,
     DesktopMenuWidgetBuilder? desktopMenuWidgetBuilder,
     this.allowPrimaryButton = false,
+    this.onMenuClosed,
   })  : assert(previewBuilder == null || deferredPreviewBuilder == null,
             'Cannot use both previewBuilder and deferredPreviewBuilder'),
         mobileMenuWidgetBuilder = mobileMenuWidgetBuilder ?? DefaultMobileMenuWidgetBuilder.instance,
@@ -79,6 +80,7 @@ class ContextMenuWidget extends StatelessWidget {
   final MobileMenuWidgetBuilder mobileMenuWidgetBuilder;
   final DesktopMenuWidgetBuilder desktopMenuWidgetBuilder;
   final bool allowPrimaryButton;
+  final VoidCallback? onMenuClosed;
 
   /// Base icon theme for menu icons. The size will be overridden depending
   /// on platform.
@@ -111,6 +113,7 @@ class ContextMenuWidget extends StatelessWidget {
             iconTheme: iconTheme,
             menuWidgetBuilder: desktopMenuWidgetBuilder,
             allowPrimaryButton: allowPrimaryButton,
+            onMenuClosed: onMenuClosed,
             child: child!,
           );
         }

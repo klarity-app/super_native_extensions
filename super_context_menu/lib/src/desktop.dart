@@ -147,6 +147,7 @@ class DesktopContextMenuWidget extends StatelessWidget {
     required this.menuWidgetBuilder,
     this.iconTheme,
     this.allowPrimaryButton = false,
+    this.onMenuClosed,
   });
 
   final HitTestBehavior hitTestBehavior;
@@ -155,6 +156,7 @@ class DesktopContextMenuWidget extends StatelessWidget {
   final DesktopMenuWidgetBuilder menuWidgetBuilder;
   final Widget child;
   final bool allowPrimaryButton;
+  final VoidCallback? onMenuClosed;
 
   /// Base icon theme for menu icons. The size will be overridden depending
   /// on platform.
@@ -172,6 +174,7 @@ class DesktopContextMenuWidget extends StatelessWidget {
           position,
           pointerUpListenable,
           onMenuresolved,
+          onMenuClosed,
         );
       },
       // Used on web to determine whether to prevent browser context menu
@@ -204,6 +207,7 @@ class DesktopContextMenuWidget extends StatelessWidget {
     Offset globalPosition,
     Listenable onInitialPointerUp,
     Function(bool) onMenuResolved,
+    VoidCallback? onMenuClosed,
   ) async {
     final onShowMenu = SimpleNotifier();
     final onHideMenu = ValueNotifier<raw.MenuResult?>(null);
@@ -251,6 +255,7 @@ class DesktopContextMenuWidget extends StatelessWidget {
             });
         final res = await menuContext.showContextMenu(request);
         onHideMenu.value = res;
+        onMenuClosed?.call();
       } else {
         onMenuResolved(false);
       }
